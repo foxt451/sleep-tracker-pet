@@ -1,0 +1,300 @@
+openapi: 3.0.0
+info:
+  title: Sleep Tracker | Pet
+  contact: {}
+  version: "1.0"
+servers:
+  - url: "{server}"
+    variables:
+      {
+        server:
+          {
+            enum: ["http://localhost:3000/api/v1"],
+            default: "http://localhost:3000/api/v1",
+          },
+      }
+paths:
+  /sleep-records:
+    get:
+      tags:
+        - Records
+      summary: Get All Records
+      operationId: GetAllRecords
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    post:
+      tags:
+        - Records
+      summary: Create Record
+      operationId: CreateRecord
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRecordRequest"
+            example:
+              sleepinessAfter: 1
+              sleepinessBefore: 4
+              wakeupMood: 8
+              fallingAsleepMood: 6
+              fallingAsleepTime: 2012-04-23T23:25:43.511Z
+              wakeupTime: 2012-04-24T08:25:43.511Z
+              awakenings: 0
+              comment: goooooood sleep
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /sleep-records/{id}:
+    get:
+      tags:
+        - Records
+      summary: Get Single Record
+      operationId: GetSingleRecord
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 62836ec981aa4fb34b44b789
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Records
+      summary: Update Record
+      operationId: UpdateRecord
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 62836ec981aa4fb34b44b789
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRecordRequest"
+            example:
+              sleepinessAfter: 2
+              sleepinessBefore: 4
+              fallingAsleepTime: 2012-04-23T23:25:43.511Z
+              wakeupTime: 2012-04-24T09:25:43.511Z
+              awakenings: 2
+              comment: bad sleep
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Records
+      summary: Delete Record
+      operationId: DeleteRecord
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 62836ec981aa4fb34b44b789
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+            example:
+              email: svpfsdfsdjo14@gmail.com
+              username: foxt
+              password: 1aA3$5679
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            example:
+              email: svpfsdfsdjo14@gmail.com
+              password: 1aA3$5678
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    CreateRecordRequest:
+      title: CreateRecordRequest
+      required:
+        - sleepinessAfter
+        - sleepinessBefore
+        - wakeupMood
+        - fallingAsleepMood
+        - fallingAsleepTime
+        - wakeupTime
+        - awakenings
+        - comment
+      type: object
+      properties:
+        sleepinessAfter:
+          type: integer
+          format: int32
+        sleepinessBefore:
+          type: integer
+          format: int32
+        wakeupMood:
+          type: integer
+          format: int32
+        fallingAsleepMood:
+          type: integer
+          format: int32
+        fallingAsleepTime:
+          type: string
+        wakeupTime:
+          type: string
+        awakenings:
+          type: integer
+          format: int32
+        comment:
+          type: string
+      example:
+        sleepinessAfter: 1
+        sleepinessBefore: 4
+        wakeupMood: 8
+        fallingAsleepMood: 6
+        fallingAsleepTime: 2012-04-23T23:25:43.511Z
+        wakeupTime: 2012-04-24T08:25:43.511Z
+        awakenings: 0
+        comment: goooooood sleep
+    UpdateRecordRequest:
+      title: UpdateRecordRequest
+      required:
+        - sleepinessAfter
+        - sleepinessBefore
+        - fallingAsleepTime
+        - wakeupTime
+        - awakenings
+        - comment
+      type: object
+      properties:
+        sleepinessAfter:
+          type: integer
+          format: int32
+        sleepinessBefore:
+          type: integer
+          format: int32
+        fallingAsleepTime:
+          type: string
+        wakeupTime:
+          type: string
+        awakenings:
+          type: integer
+          format: int32
+        comment:
+          type: string
+      example:
+        sleepinessAfter: 2
+        sleepinessBefore: 4
+        fallingAsleepTime: 2012-04-23T23:25:43.511Z
+        wakeupTime: 2012-04-24T09:25:43.511Z
+        awakenings: 2
+        comment: bad sleep
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - email
+        - username
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        email: svpfsdfsdjo14@gmail.com
+        username: foxt
+        password: 1aA3$5679
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: svpfsdfsdjo14@gmail.com
+        password: 1aA3$5678
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Records
+  - name: Auth
