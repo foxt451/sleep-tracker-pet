@@ -9,8 +9,8 @@ servers:
       {
         server:
           {
-            enum: ["http://localhost:3000/api/v1"],
-            default: "http://localhost:3000/api/v1",
+            enum: ["http://localhost:3000/api/v1", "https://sleeptracker-api-pet.herokuapp.com/api/v1"],
+            default: "https://sleeptracker-api-pet.herokuapp.com/api/v1",
           },
       }
 paths:
